@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { BASE_URL } from "../../utils/constants"
+import axios from "axios"
 
 export const getCategories = createAsyncThunk(
     'categories/getCategories',
@@ -18,5 +19,22 @@ const categoriesSlice = createSlice({
     name: 'categories',
     initialState: {
         list: [],
+        isLoading: false,
     },
+    extraReducers: (builder) => {
+        builder.addCase(getCategories.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(getCategories.fulfilled, (state, { payload }) => {
+            state.list = payload
+            state.isLoading = false
+        })
+        builder.addCase(getCategories.rejected, (state) => {
+            state.isLoading = false
+            console.log('Loading error')
+
+        })
+    }
 })
+
+export default categoriesSlice.reducer
