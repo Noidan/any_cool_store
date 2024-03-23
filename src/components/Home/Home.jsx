@@ -16,7 +16,7 @@ const Home = () => {
     useEffect(() => {
         if (!list.length) return
 
-        dispatch(filterByPrice(100))
+        dispatch(filterByPrice(50))
     }, [dispatch, list.length])
 
     return (
@@ -34,7 +34,7 @@ const Home = () => {
             <Products
                 products={filtered}
                 amount={5}
-                title='Less then 100$' />
+                title='Less then 50$' />
 
         </>
     )
