@@ -10,25 +10,26 @@ import { getCategories } from '../../features/categories/categoriesSlice'
 import { getProducts } from '../../features/products/productSlice'
 
 const App = () => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getCategories())
-        dispatch(getProducts())
-    }, [dispatch])
+  useEffect(() => {
+    dispatch(getCategories())
+    dispatch(getProducts())
+  }, [dispatch])
 
-    return (
-        <div className="app">
-            <Header />
+  return (
+    <div className="app">
+      <Header />
 
-            <div className='container'>
-                <Sidebar />
-                <AppRoutes />
-            </div>
+      <div className='container'>
+        <Sidebar />
+        <AppRoutes />
+      </div>
+      <div></div>
 
-            <Footer />
-        </div>
-    )
+      <Footer />
+    </div>
+  )
 }
 
 export default App
