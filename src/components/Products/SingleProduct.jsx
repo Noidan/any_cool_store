@@ -1,21 +1,35 @@
 import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useGetProductQuery } from '../../features/api/apiSlice'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { ROUTES } from '../../utils/routes'
+
+import { useGetProductQuery } from '../../features/api/apiSlice'
+import { getRelatedProducts } from '../../features/products/productSlice'
+
 import Product from './Product'
+import Products from './Products'
+
 
 const SingleProduct = () => {
+  const dispatch = useDispatch()
   const { id } = useParams()
   const navigate = useNavigate()
+  const { list, related } = useSelector(({ products }) => products)
 
   const { data, isLoading, isFetching, isSuccess } = useGetProductQuery({ id });
 
   useEffect(() => {
     if (!isFetching && !isLoading && !isSuccess) {
-      navigate(ROUTES.HOME);
+      navigate(ROUTES.HOME)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, isFetching, isSuccess]);
+  }, [isLoading, isFetching, isSuccess])
+
+  useEffect(() => {
+    if (!data || !list.length) return
+    dispatch(getRelatedProducts(data.category.id))
+  }, [data, dispatch, list.length])
 
   return (
     !data ? (
@@ -25,6 +39,7 @@ const SingleProduct = () => {
     ) : (
       <>
         <Product {...data} />
+        <Products products={related} amount={5} title="Related products" />
       </>
     )
 
