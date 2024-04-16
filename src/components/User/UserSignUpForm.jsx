@@ -3,21 +3,21 @@ import React, { useState } from 'react'
 import styles from '../../styles/User.module.css'
 
 const UserSignUpForm = () => {
-  const { value, setValue } = useState({
+  const { values, setValues } = useState({
     name: '',
     email: '',
     password: '',
     avatar: '',
   })
 
-  const handleChange = (target:) => {
-    setValue({ ...value, })
-  }
+  const handleChange = ({ target: { value, name } }) => {
+    setValues({ ...values, [name]: value });
+  };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.close}>
-        <svg className={icon}>
+        <svg className='icon'>
           <use xLinkHref={`${process.env.PUBLIC_URL}/sprite.svg#close`} />
         </svg>
 
@@ -33,36 +33,36 @@ const UserSignUpForm = () => {
             type="name"
             placeholder='Your name'
             name='name'
-            value=''
+            value={values.name}
             autoComplete='off'
-            onChange={() => { }}
-            required
-          />
-          <input
-            type="password"
-            placeholder='Your password'
-            name='password'
-            value=''
-            autoComplete='off'
-            onChange={() => { }}
+            onChange={handleChange}
             required
           />
           <input
             type="email"
             placeholder='Your email'
             name='email'
-            value=''
+            value={values.email}
             autoComplete='off'
-            onChange={() => { }}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            placeholder='Your password'
+            name='password'
+            value={values.password}
+            autoComplete='off'
+            onChange={handleChange}
             required
           />
           <input
             type="avatar"
             placeholder='Your avatar'
             name='avatar'
-            value=''
+            value={values.avatar}
             autoComplete='off'
-            onChange={() => { }}
+            onChange={handleChange}
             required
           />
 
